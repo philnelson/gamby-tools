@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>GAMY Sprite Drawing Board</title>
+		<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	</head>
+	<style>
+	/* Fuck it */
+	* {
+  	margin: 0;
+  	padding: 0;
+  	border-spacing:0;
+  }
+	  
+	  tr {
+    	border: 1px solid #000;
+  	}
+  	
+  	td {
+    	border-right: 1px solid #000;
+    	border-top: 1px solid #000;
+    	padding: 0;
+    	margin: 0;
+    	height: 10px;
+    	width: 10px;
+  	}
+  	
+  	table {
+    	border-bottom: 1px solid #000;
+    	border-left: 1px solid #000;
+  	}
+  	
+  	td.active {
+  	  background: #000;
+  	}
+  	
+	</style>
+	<body>
+	  <div id="drawing-board">
+  	  <table></table>
+	  </div>
+	  <p>Click each cell to turn it on / off. The code sample below will update automatically. Just copy/paste it into your IDE.</p>
+	  <div id="code">
+	    <textarea style="width: 90%;"></textarea>
+	  </div>
+	  <p>Settings</p>
+	  <label>Rows</label>
+	  <input type="text" id="rows" value="64">
+	  <label>Columns</label>
+	  <input type="text" id="cols" value="96">
+	  <button id="reset">Reset</button>
+	</body>
+	<script>
+	$(document).ready(function() {
+	
+	    rows = 64;
+	    cols = 96;
+	    
+	    setTimeout(drawBoard(),500);
+	    
+	    function drawBoard()
+	    {
+  	    $('table').css('height',rows*10);
+  	    $('table').css('width',cols*10);
+  	    
+  	    for(x = 0; x < rows; x++)
+  	    {
+  	      $('#drawing-board table').append('<tr id="'+x+'">');
+    	    for(y = 0; y < cols; y++)
+    	    {
+      	    $('#drawing-board table #' + x).append('<td id="'+x+'-'+y+'"></td>');
+    	    }
+    	    $('#drawing-board table').append('</tr>');
+  	    }
+	    }
+	    
+	    $('td').live('click',function(){
+  	    $(this).toggleClass('active');
+	    });
+	    
+	    $('#reset').click(function(){
+	    
+	      $('tr,td').empty();
+	    
+  	    rows = $('#rows').val();
+  	    cols = $('#cols').val();
+  	    drawBoard();
+	    });
+	    
+	});
+	</script>
+</html>
